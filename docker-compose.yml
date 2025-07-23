@@ -1,39 +1,49 @@
 version: '3.8'
+
 services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: moodle
+      MYSQL_DATABASE: bitnami_moodle
+      MYSQL_USER: bn_moodle
+      MYSQL_PASSWORD: moodle
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
   moodle:
-    image: bitnami/moodle:latest
+    image: bitnami/moodle:4
+    container_name: moodle
+    depends_on:
+      - mariadb
     restart: always
     ports:
-      - "8080:8080"
+      - "8080:8080"   # Moodle Web UI
+      - "8443:8443"   # SSL (optional)
     environment:
       MOODLE_DATABASE_HOST: mariadb
       MOODLE_DATABASE_PORT_NUMBER: 3306
-      MOODLE_DATABASE_USER: moodle
-      MOODLE_DATABASE_NAME: moodle
-      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_DATABASE_USER: bn_moodle
+      MOODLE_DATABASE_NAME: bitnami_moodle
+      MOODLE_DATABASE_PASSWORD: moodle
       MOODLE_USERNAME: admin
       MOODLE_PASSWORD: admin123
-      MOODLE_EMAIL: admin@example.com
-      MOODLE_SITE_NAME: "Offline Exam System"
-      MOODLE_SMTP_HOST: ""
     volumes:
-      - ./moodle_data:/bitnami/moodle
-      - ./plugins:/bitnami/moodle/plugins
-      - ./setup-scripts:/docker-entrypoint-initdb.d
-  mariadb:
-    image: bitnami/mariadb:latest
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: rootpass
-      MARIADB_DATABASE: moodle
-      MARIADB_USER: moodle
-      MARIADB_PASSWORD: moodlepass
-    volumes:
-      - ./mariadb_data:/bitnami/mariadb
+      - moodle_data:/bitnami/moodle
+      - moodle_data_data:/bitnami/moodledata
+      # - ./plugins:/bitnami/moodle/plugindir      # Optional: copy your plugin zips here
+      # - ./moodle_data/question:/bitnami/moodle/question  # For custom question types like draw.io
+
   jobe:
-    image: triton68/jobe-server:latest
+    image: trampgeek/jobeinabox
+    container_name: jobe
     restart: always
     ports:
-      - "8081:8081"
-    environment:
-      JOBE_SERVER_PORT: 8081
+      - "4000:80"
+
+volumes:
+  mariadb_data:
+  moodle_data:
+  moodle_data_data:
