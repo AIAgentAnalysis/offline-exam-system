@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  moodle:
+    image: bitnami/moodle:latest
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_USERNAME: admin
+      MOODLE_PASSWORD: admin123
+      MOODLE_EMAIL: admin@example.com
+      MOODLE_SITE_NAME: "Offline Exam System"
+      MOODLE_SMTP_HOST: ""
+    volumes:
+      - ./moodle_data:/bitnami/moodle
+      - ./plugins:/bitnami/moodle/plugins
+      - ./setup-scripts:/docker-entrypoint-initdb.d
+  mariadb:
+    image: bitnami/mariadb:latest
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodlepass
+    volumes:
+      - ./mariadb_data:/bitnami/mariadb
+  jobe:
+    image: triton68/jobe-server:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      JOBE_SERVER_PORT: 8081
