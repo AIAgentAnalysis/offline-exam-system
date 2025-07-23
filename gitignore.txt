@@ -1,0 +1,8 @@
+moodle_data/
+mariadb_data/
+*.zip
+*.bak
+*.tmp
+__pycache__/
+setup-scripts/*.log
+.env
