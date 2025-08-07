@@ -4,7 +4,37 @@
 
 ---
 
-## 🚀 Quick Start
+## � Table of Contents
+
+1. [System Requirements](#system-requirements)
+2. [Quick Start](#quick-start)
+3. [What's Inside](#whats-inside)
+4. [LAN-Based Exam Instructions](#lan-based-exam-instructions)
+5. [Docker Services Used](#docker-services-used)
+6. [Features](#features)
+7. [Plugin Support](#plugin-support)
+8. [Lockdown/SEB Support](#lockdownseb-support)
+9. [Best Practices](#best-practices)
+10. [Backup & Restore](#backup--restore)
+11. [Instructor Workflow](#instructor-workflow)
+12. [Student Workflow](#student-workflow)
+13. [Troubleshooting](#troubleshooting)
+14. [Resources](#resources)
+15. [Need Help?](#need-help)
+
+---
+
+## 🖥️ System Requirements
+
+- Docker Desktop (Windows, Linux, or Mac)
+- PowerShell (for Windows users)
+- Bash shell (for Linux/macOS users)
+- At least 2GB RAM, 2 CPU cores recommended
+- ~5GB free disk space
+
+---
+
+## �🚀 Quick Start
 
 1. **Clone Repo**
    ```bash
@@ -44,20 +74,57 @@
 
 ## 📦 What's Inside
 
+
 ```plaintext
 offline-exam-system/
+├── auto-backup.ps1/.sh              # Backup scripts (PowerShell & Bash)
+├── auto-restore.ps1/.sh             # Restore scripts (PowerShell & Bash)
+├── backup/                          # Backup data (mariadb_data.tar.gz, moodle_data.tar.gz)
+├── Configuring/                     # (custom folder, usage TBD)
+├── custom-theme/
+│   └── manfreetech/                 # Custom theme (empty or for future use)
 ├── docker-compose.yml               # Docker stack (Moodle + MariaDB + Jobe)
-├── moodle_data/                     # Moodle persistent files
-├── mariadb_data/                    # MariaDB database storage
-├── plugins/                         # Moodle plugins (ZIPs or folders)
-│   ├── qtype_coderunner.zip
-│   └── qtype_drawio/
+├── down.ps1/.sh                     # Stop/backup scripts
+├── gitignore.txt
 ├── import/
-│   └── sample_exam_quiz.xml         # Example Moodle XML quiz
+│   └── import_sample_exam_quiz.xml  # Example Moodle XML quiz
+├── moodle_data/
+│   ├── plugins/
+│   │   └── qtype_coderunner.zip     # CodeRunner plugin (zip)
+│   └── question/type/qtype_drawio/  # Draw.io plugin (source)
+├── plugins/
+│   ├── qtype_coderunner.zip         # CodeRunner plugin (zip)
+│   └── qtype_drawio/                # Draw.io plugin (source)
+├── question_set/
+│   └── sample_c_qstn.xml            # Sample C question set
+├── README.md
+├── README_Lockdown.md
+├── Restoring/                       # (custom folder, usage TBD)
+├── Setting/                         # (custom folder, usage TBD)
 ├── setup-scripts/
-│   └── install-plugins.sh           # Optional helper script
-├── .gitignore
-└── README.md
+│   ├── custom-theme/
+│   │   └── manfreetech/
+│   │       ├── lang/en/             # (empty)
+│   │       ├── layout/
+│   │       ├── pix/
+│   │       └── style/
+│   └── setup-scripts_install-plugins.sh
+├── themes/
+│   └── manfree/
+│       ├── config.php
+│       ├── custom.scss
+│       ├── default.php
+│       ├── frontpage.php
+│       ├── lang/en/theme_manfree.php
+│       ├── lib.php
+│       ├── login.php
+│       ├── logo.png
+│       ├── settings.php
+│       ├── theme_manfree.php
+│       └── version.php
+├── Trying/                          # (custom folder, usage TBD)
+├── up.ps1/.sh                       # Start/restore scripts
+├── Validating/                      # (custom folder, usage TBD)
 ```
 
 ---
@@ -67,7 +134,6 @@ offline-exam-system/
 1. Instructor launches the server via Docker.
 2. Connect all student devices to same Wi-Fi/hotspot.
 3. Students open browser: `http://<instructor-ip>:8080`
-
    * Get IP with: `wsl hostname -I` or `ipconfig`
 4. Students log in and take the exam.
 5. Answers stored centrally for grading.
@@ -99,7 +165,28 @@ offline-exam-system/
 
 ## 💡 Plugin Support
 
+
 ### CodeRunner
+* Place `qtype_coderunner.zip` inside either `plugins/` or `moodle_data/plugins/`.
+* Restart containers after adding.
+* Finish install in Moodle GUI.
+
+### Draw.io Plugin
+* Place the `qtype_drawio` folder inside either `plugins/` or `moodle_data/question/type/`.
+* May require manual setup.
+* See plugin docs for question creation and auto-grading.
+
+---
+
+## 🔒 Lockdown/SEB Support
+
+To enable lockdown exams, install the Safe Exam Browser (SEB) plugin in Moodle:
+
+- Admin → Plugins → Install plugins → Search "Safe Exam Browser"
+- Configure exam to require SEB access keys.
+- See [SEB documentation](https://safeexambrowser.org/) for details.
+
+---
 
 * Place `qtype_coderunner.zip` inside `plugins/`
 * Restart containers
@@ -113,6 +200,7 @@ offline-exam-system/
 
 ---
 
+
 ## 🧠 Best Practices
 
 * Use **bulk user import** for students with roll numbers.
@@ -121,26 +209,41 @@ offline-exam-system/
 
 ---
 
+
 ## 💾 Backup & Restore
 
-### Automation Scripts
+### Automation Scripts (Cross-Platform)
 
-This project includes automation scripts for backup and restore:
+This project includes automation scripts for backup and restore, available for both Linux/macOS and Windows:
 
-- `up.sh`: Restores data from backup and starts containers
-- `down.sh`: Backs up data and stops containers
-- `auto-backup.sh`: Manual backup
-- `auto-restore.sh`: Manual restore
-
+#### For Linux/macOS:
+Use the provided shell scripts:
+```bash
+./up.sh            # Restore data and start containers
+./down.sh          # Backup data and stop containers
+./auto-backup.sh
+./auto-restore.sh
+```
 **Important:** After cloning or copying the project, set executable permissions for these scripts:
-
 ```bash
 chmod +x up.sh down.sh auto-backup.sh auto-restore.sh
 ```
-
 You only need to do this once per new system or after copying the files.
 
-To backup volumes manually:
+#### For Windows (PowerShell):
+Use the PowerShell scripts:
+```powershell
+.\up.ps1           # Restore data and start containers
+.\down.ps1         # Backup data and stop containers
+.\auto-backup.ps1
+.\auto-restore.ps1
+```
+Run these from a PowerShell terminal in your project folder.
+**Note:** If you see an error about script execution policy, these scripts now automatically set the policy for the session. No manual change is needed.
+
+---
+
+To backup volumes manually (works on both platforms if Docker is installed):
 
 ```bash
 docker run --rm -v offline-exam-system_moodle_data:/data -v $(pwd):/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
@@ -148,12 +251,14 @@ docker run --rm -v offline-exam-system_moodle_data:/data -v $(pwd):/backup alpin
 
 Repeat for:
 
-* `offline-exam-system_moodle_data_data`
+* `offline-exam-system_moodle_data`
 * `offline-exam-system_mariadb_data`
 
 To restore:
 
 * Use `docker volume create` and `tar xzf` into the new volume
+
+---
 
 ## 🧑‍🏫 Instructor Workflow
 
@@ -178,18 +283,18 @@ To restore:
 ## 🐞 Troubleshooting
 
 * **No access to `localhost:8080`?**
-
   * Try `http://<your LAN IP>:8080`
   * Use `wsl hostname -I` or `ipconfig`
 
 * **Moodle restarting constantly?**
-
-  * Delete `moodle_data_data` volume and re-run setup
+  * Delete `moodle_data` volume and re-run setup
 
 * **Plugins not showing?**
-
   * Make sure ZIP files are inside `plugins/`
   * Restart Moodle container after adding
+
+* **Docker: invalid reference format?**
+  * This is now fixed in the PowerShell scripts. If you see this error, ensure you are using the latest scripts from this repo.
 
 ---
 
@@ -199,6 +304,7 @@ To restore:
 * [CodeRunner Plugin](https://github.com/trampgeek/moodle-qtype_coderunner)
 * [Jobe Backend](https://github.com/trampgeek/jobe)
 * [Draw.io Question Type](https://github.com/BradenM/moodle-qtype_drawio)
+* [Safe Exam Browser](https://safeexambrowser.org/)
 
 ---
 
