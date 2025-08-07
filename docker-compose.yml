@@ -33,8 +33,7 @@ services:
     volumes:
       - moodle_data:/bitnami/moodle
       - moodle_data_data:/bitnami/moodledata
-      # - ./plugins:/bitnami/moodle/plugindir      # Optional: copy your plugin zips here
-      # - ./moodle_data/question:/bitnami/moodle/question  # For custom question types like draw.io
+      - ./themes/manfree:/bitnami/moodle/theme/manfree
 
   jobe:
     image: trampgeek/jobeinabox

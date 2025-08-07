@@ -123,7 +123,24 @@ offline-exam-system/
 
 ## 💾 Backup & Restore
 
-To backup volumes:
+### Automation Scripts
+
+This project includes automation scripts for backup and restore:
+
+- `up.sh`: Restores data from backup and starts containers
+- `down.sh`: Backs up data and stops containers
+- `auto-backup.sh`: Manual backup
+- `auto-restore.sh`: Manual restore
+
+**Important:** After cloning or copying the project, set executable permissions for these scripts:
+
+```bash
+chmod +x up.sh down.sh auto-backup.sh auto-restore.sh
+```
+
+You only need to do this once per new system or after copying the files.
+
+To backup volumes manually:
 
 ```bash
 docker run --rm -v offline-exam-system_moodle_data:/data -v $(pwd):/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
@@ -137,8 +154,6 @@ Repeat for:
 To restore:
 
 * Use `docker volume create` and `tar xzf` into the new volume
-
----
 
 ## 🧑‍🏫 Instructor Workflow
 

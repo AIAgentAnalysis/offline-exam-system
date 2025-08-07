@@ -1,0 +1,53 @@
+
+// Manfree Technologies branding
+$brand-primary: #0056b3; // Deep blue (header, navbar)
+$brand-accent: #00bcd4; // Cyan accent (buttons, highlights)
+$brand-bg: #f0f4fa; // Light background
+$brand-text: #222e3a; // Dark text
+$font-family-base: 'Segoe UI', 'Arial', 'Roboto', sans-serif;
+
+body {
+  background: $brand-bg;
+  font-family: $font-family-base;
+  color: $brand-text;
+}
+
+.navbar, .navbar-nav {
+  background-color: $brand-primary !important;
+}
+
+.btn-primary, .btn-info, .btn-success {
+  background-color: $brand-accent !important;
+  border: none;
+  color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base;
+  color: $brand-primary;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+// Optional: Add a subtle background image or pattern
+// body {
+//   background: url('/theme/manfree/background.svg') no-repeat center center fixed;
+//   background-size: cover;
+// }
+
+// Links
+a {
+  color: $brand-primary;
+  text-decoration: none;
+}
+a:hover {
+  color: $brand-accent;
+}
+
+// Custom logo size
+.logo {
+  max-height: 60px;
+}

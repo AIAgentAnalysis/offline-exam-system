@@ -1,0 +1,80 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <!-- Basic Theory: MCQ -->
+  <question type="multichoice">
+    <name><text>What is the correct syntax to declare an integer variable in C?</text></name>
+    <questiontext format="html"><text>Choose the correct option.</text></questiontext>
+    <generalfeedback format="html"><text></text></generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html"><text>int x;</text></answer>
+    <answer fraction="0" format="html"><text>integer x;</text></answer>
+    <answer fraction="0" format="html"><text>num x;</text></answer>
+    <answer fraction="0" format="html"><text>var x;</text></answer>
+  </question>
+
+  <!-- Intermediate Theory: Short Answer -->
+  <question type="shortanswer">
+    <name><text>What is the output of printf("%d", 5 + 3 * 2); ?</text></name>
+    <questiontext format="html"><text>Enter the output as a number.</text></questiontext>
+    <generalfeedback format="html"><text></text></generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answer fraction="100" format="moodle_auto_format"><text>11</text></answer>
+  </question>
+
+  <!-- Coding: CodeRunner (C) -->
+  <question type="coderunner">
+    <name><text>Write a C function to return the sum of two integers.</text></name>
+    <questiontext format="html"><text>Complete the function <code>int add(int a, int b)</code> that returns the sum of <code>a</code> and <code>b</code>.</text></questiontext>
+    <generalfeedback format="html"><text></text></generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <templateparams>
+      <param name="language">c</param>
+    </templateparams>
+    <testcases>
+      <testcase>
+        <stdin></stdin>
+        <expected>5</expected>
+        <testcode>printf("%d", add(2,3));</testcode>
+      </testcase>
+      <testcase>
+        <stdin></stdin>
+        <expected>0</expected>
+        <testcode>printf("%d", add(-2,2));</testcode>
+      </testcase>
+    </testcases>
+  </question>
+
+  <!-- Coding: CodeRunner (C) -->
+  <question type="coderunner">
+    <name><text>Write a C function to check if a number is even.</text></name>
+    <questiontext format="html"><text>Complete the function <code>int is_even(int n)</code> that returns 1 if <code>n</code> is even, 0 otherwise.</text></questiontext>
+    <generalfeedback format="html"><text></text></generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <templateparams>
+      <param name="language">c</param>
+    </templateparams>
+    <testcases>
+      <testcase>
+        <stdin></stdin>
+        <expected>1</expected>
+        <testcode>printf("%d", is_even(4));</testcode>
+      </testcase>
+      <testcase>
+        <stdin></stdin>
+        <expected>0</expected>
+        <testcode>printf("%d", is_even(5));</testcode>
+      </testcase>
+    </testcases>
+  </question>
+</quiz>
