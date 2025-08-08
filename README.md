@@ -221,8 +221,8 @@ Use the provided shell scripts:
 ```bash
 ./up.sh            # Restore data and start containers
 ./down.sh          # Backup data and stop containers
-./auto-backup.sh
-./auto-restore.sh
+./auto-backup.sh   # Manual backup (verifies backup completeness)
+./auto-restore.sh  # Manual restore
 ```
 **Important:** After cloning or copying the project, set executable permissions for these scripts:
 ```bash
@@ -243,10 +243,18 @@ Run these from a PowerShell terminal in your project folder.
 
 ---
 
+#### Backup & Restore Best Practices
+
+- Always run backup/restore scripts from your project folder.
+- The backup script now checks for `config.php` in the backup to ensure a complete backup. If missing, you will see a warning.
+- When restoring on a new PC, create fresh Docker volumes before restoring.
+- After restore, verify that all core Moodle files (including `config.php`) are present in the volume.
+- Keep custom plugins/themes in your repo for easy re-deployment.
+
 To backup volumes manually (works on both platforms if Docker is installed):
 
 ```bash
-docker run --rm -v offline-exam-system_moodle_data:/data -v $(pwd):/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
+docker run --rm -v offline-exam-system_moodle_data:/data -v $(pwd)/backup:/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
 ```
 
 Repeat for:
