@@ -7,15 +7,15 @@ if (!(Test-Path -Path "backup" -PathType Container)) {
 }
 
 # Use correct path string for PowerShell
-$backupPath = (Get-Location).Path + "\backup"
+$currentPath = (Get-Location).Path
 # Backup Moodle data volume
-docker run --rm -v offline-exam-system_moodle_data:/data -v "$backupPath":/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
+docker run --rm -v offline-exam-system_moodle_data:/data -v "${currentPath}\backup:/backup" alpine tar czf /backup/moodle_data.tar.gz -C /data .
 # Backup MariaDB data volume
-docker run --rm -v offline-exam-system_mariadb_data:/data -v "$backupPath":/backup alpine tar czf /backup/mariadb_data.tar.gz -C /data .
+docker run --rm -v offline-exam-system_mariadb_data:/data -v "${currentPath}\backup:/backup" alpine tar czf /backup/mariadb_data.tar.gz -C /data .
 
 
 # Verify config.php exists in backup
-$configCheck = docker run --rm -v "$backupPath":/backup alpine sh -c "tar -tzf /backup/moodle_data.tar.gz | grep -q 'config.php' && echo 'FOUND' || echo 'NOT FOUND'"
+$configCheck = docker run --rm -v "${currentPath}\backup:/backup" alpine sh -c "tar -tzf /backup/moodle_data.tar.gz | grep -q 'config.php' && echo 'FOUND' || echo 'NOT FOUND'"
 if ($configCheck -eq 'FOUND') {
     Write-Host "config.php found in backup. Backup is complete."
 } else {

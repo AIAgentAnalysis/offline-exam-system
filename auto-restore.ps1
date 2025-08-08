@@ -8,8 +8,8 @@ if (!(Test-Path -Path "backup" -PathType Container)) {
 
 if (Test-Path "backup/moodle_data.tar.gz") {
     docker volume create offline-exam-system_moodle_data | Out-Null
-    $backupPath = (Get-Location).Path + "\backup"
-    docker run --rm -v offline-exam-system_moodle_data:/data -v "$backupPath":/backup alpine tar xzf /backup/moodle_data.tar.gz -C /data
+    $currentPath = (Get-Location).Path
+    docker run --rm -v offline-exam-system_moodle_data:/data -v "${currentPath}\backup:/backup" alpine tar xzf /backup/moodle_data.tar.gz -C /data
     Write-Host "Moodle data restored."
 } else {
     Write-Host "No Moodle backup found."
@@ -17,7 +17,8 @@ if (Test-Path "backup/moodle_data.tar.gz") {
 
 if (Test-Path "backup/mariadb_data.tar.gz") {
     docker volume create offline-exam-system_mariadb_data | Out-Null
-    docker run --rm -v offline-exam-system_mariadb_data:/data -v "$backupPath":/backup alpine tar xzf /backup/mariadb_data.tar.gz -C /data
+    $currentPath = (Get-Location).Path
+    docker run --rm -v offline-exam-system_mariadb_data:/data -v "${currentPath}\backup:/backup" alpine tar xzf /backup/mariadb_data.tar.gz -C /data
     Write-Host "MariaDB data restored."
 } else {
     Write-Host "No MariaDB backup found."
