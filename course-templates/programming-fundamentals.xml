@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Manfree Technologies - Programming Fundamentals Course Template -->
+<quiz>
+  <!-- Module 1: Introduction to Programming -->
+  <question type="multichoice">
+    <name><text>Programming Basics - Variables</text></name>
+    <questiontext format="html">
+      <text>What is the primary purpose of variables in programming?</text>
+    </questiontext>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.33</penalty>
+    <shuffleanswers>true</shuffleanswers>
+    <answer fraction="100" format="html">
+      <text>To store and manipulate data</text>
+    </answer>
+    <answer fraction="0" format="html">
+      <text>To make programs run faster</text>
+    </answer>
+    <answer fraction="0" format="html">
+      <text>To create user interfaces</text>
+    </answer>
+  </question>
+
+  <!-- Module 2: Control Structures -->
+  <question type="coderunner">
+    <name><text>If-Else Statement Practice</text></name>
+    <questiontext format="html">
+      <text>Write a C program that checks if a number is positive, negative, or zero.</text>
+    </questiontext>
+    <defaultgrade>2.0</defaultgrade>
+    <templateparams>
+      <param name="language">c</param>
+    </templateparams>
+    <testcases>
+      <testcase>
+        <stdin>5</stdin>
+        <expected>Positive</expected>
+      </testcase>
+      <testcase>
+        <stdin>-3</stdin>
+        <expected>Negative</expected>
+      </testcase>
+      <testcase>
+        <stdin>0</stdin>
+        <expected>Zero</expected>
+      </testcase>
+    </testcases>
+  </question>
+
+  <!-- Module 3: Functions -->
+  <question type="coderunner">
+    <name><text>Function Implementation - Factorial</text></name>
+    <questiontext format="html">
+      <text>Create a function that calculates factorial of a given number.</text>
+    </questiontext>
+    <defaultgrade>3.0</defaultgrade>
+    <templateparams>
+      <param name="language">c</param>
+    </templateparams>
+    <testcases>
+      <testcase>
+        <stdin>5</stdin>
+        <expected>120</expected>
+      </testcase>
+      <testcase>
+        <stdin>0</stdin>
+        <expected>1</expected>
+      </testcase>
+    </testcases>
+  </question>
+</quiz>

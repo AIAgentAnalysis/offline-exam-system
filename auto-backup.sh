@@ -9,8 +9,8 @@ if [ ! -d "backup" ]; then
 	exit 1
 fi
 
-docker run --rm -v offline-exam-system_moodle_data:/data -v "$(pwd)/backup":/backup alpine tar czf /backup/moodle_data.tar.gz -C /data .
-docker run --rm -v offline-exam-system_mariadb_data:/data -v "$(pwd)/backup":/backup alpine tar czf /backup/mariadb_data.tar.gz -C /data .
+docker run --rm -v offline-exam-system_moodle_data:/data -v "$(pwd)/backup":/backup mariadb:10.6 tar czf /backup/moodle_data.tar.gz -C /data .
+docker run --rm -v offline-exam-system_mariadb_data:/data -v "$(pwd)/backup":/backup mariadb:10.6 tar czf /backup/mariadb_data.tar.gz -C /data .
 
 		# Verify config.php exists in backup
 		tar -tzf ./backup/moodle_data.tar.gz | grep -q "config.php"

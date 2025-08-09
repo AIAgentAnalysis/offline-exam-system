@@ -30,10 +30,10 @@ services:
       MOODLE_DATABASE_PASSWORD: moodle
       MOODLE_USERNAME: admin
       MOODLE_PASSWORD: admin123
+      MOODLE_SKIP_INSTALL: "yes"
     volumes:
       - moodle_data:/bitnami/moodle
       - moodle_data_data:/bitnami/moodledata
-      - ./themes/manfree:/bitnami/moodle/theme/manfree
 
   jobe:
     image: trampgeek/jobeinabox

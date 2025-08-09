@@ -2,6 +2,13 @@
 
 **Advanced Moodle-based, LAN-ready, Dockerized exam platform. 100% Offline.**
 
+## 🔄 Distributed Workflow Support
+
+**Perfect for multi-location training institutes:**
+- **Company Location**: Staff/students use LMS → `./down.sh` → commit backup → push to Git
+- **Remote Location**: Pull from Git → `./up.sh` → LMS restored with all data
+- **Seamless Sync**: Complete data synchronization via Git repository
+
 ---
 
 ## � Table of Contents
@@ -26,11 +33,17 @@
 
 ## 🖥️ System Requirements
 
-- Docker Desktop (Windows, Linux, or Mac)
-- PowerShell (for Windows users)
-- Bash shell (for Linux/macOS users)
-- At least 2GB RAM, 2 CPU cores recommended
-- ~5GB free disk space
+**Recommended: WSL2 + Docker Desktop (Windows)**
+- WSL2 (Ubuntu 20.04+ recommended)
+- Docker Desktop with WSL2 backend
+- At least 4GB RAM, 2 CPU cores recommended
+- ~10GB free disk space
+- Git installed in WSL
+
+**Alternative: Native Linux/macOS**
+- Docker Engine/Desktop
+- Bash shell
+- Git
 
 ---
 
@@ -211,6 +224,22 @@ To enable lockdown exams, install the Safe Exam Browser (SEB) plugin in Moodle:
 
 
 ## 💾 Backup & Restore
+
+### 🌍 Distributed Workflow
+
+**For Multi-Location Training Institutes:**
+
+```bash
+# Company Location (Daily)
+./down.sh              # Auto-backup + stop
+git add backup/
+git commit -m "Daily backup $(date +%Y-%m-%d)"
+git push origin main
+
+# Remote Location (As needed)
+git pull origin main    # Get latest backups
+./up.sh                # Auto-restore + start
+```
 
 ### Automation Scripts (Cross-Platform)
 
